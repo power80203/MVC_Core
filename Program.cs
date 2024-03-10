@@ -32,6 +32,9 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+// 路由設定 可以設定很多組
+// 第一組優先順序最高
+// 像是這邊沒輸入預設就是home 控制器
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

@@ -48,7 +48,7 @@ namespace MVC_Core.Controllers
 
         // IActionResult 的 I 就是 interface
 
-        public  async Task<IActionResult> List()
+        public async Task<IActionResult> List()
 
 
 
@@ -61,6 +61,30 @@ namespace MVC_Core.Controllers
             {
                 return View(await _db.UserTables.ToListAsync()); // 直接列出來all
             }
+        }
+
+        [HttpGet]
+        public IActionResult Details(int?  _ID = 1) // int? 表示 允許null
+
+        {
+            if (_ID == null||_ID.HasValue == false)
+            {
+                // 沒有ID被輸入就會報錯
+                return new StatusCodeResult((int)System.Net.HttpStatusCode.BadRequest);
+            }
+
+            UserTable ut = _db.UserTables.Find(_ID);
+
+
+            if (ut == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return View(ut);
+            }
+
         }
 
 
