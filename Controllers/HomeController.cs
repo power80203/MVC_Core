@@ -87,6 +87,87 @@ namespace MVC_Core.Controllers
 
         }
 
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+
+
+        // 因為這個是http post 所以會進過這個處理
+        [HttpPost]
+        public IActionResult Create(UserTable _userTable)
+        {
+            // 檢查是否回傳值有問題
+
+            if (_userTable != null)
+            {
+                _db.UserTables.Add(_userTable);
+                _db.SaveChanges();
+
+
+                return Content("新增一紀錄成功!!!");
+            }
+            else
+            {
+                return View();
+                //return RedirectToAction("List","Home");
+            }
+
+        }
+
+        public IActionResult Delete(int? _ID=1)
+
+
+        {
+            if (_ID == null)
+            {
+                return Content("沒有輸入文章ID");
+            }
+
+
+            UserTable ut = _db.UserTables.Find(_ID);
+
+            if (ut == null)
+            {
+                return Content("沒有輸入這篇文章");
+            }
+
+
+
+            return View(ut);
+
+        }
+
+        // 用不同的函數名稱 但是一樣去跑delete
+        [HttpPost, ActionName("Delete")]
+
+        public IActionResult DeleteConfrim(int _ID = 1)
+        {
+
+
+            //ModelState 就是表單傳過來透過 ModelState.IsValid 檢查是否必要的欄位都有輸入
+            if(ModelState.IsValid)
+                {
+
+                    UserTable ut = _db.UserTables.Find(_ID);
+                    if (ut == null)
+                    {
+                        return Content("找不到這筆紀錄");
+                    }
+
+                    _db.Entry(ut).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
+                    // save change 才是真的開始
+                    _db.SaveChanges(true);
+
+                    
+
+
+
+            }
+            return Content("成功刪除囉");
+
+        }
 
 
 

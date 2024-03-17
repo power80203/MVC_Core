@@ -48,10 +48,18 @@
             <td>
                 @Html.DisplayFor(modelItem => item.UserMobilePhone)
             </td>
+            @*
+                這邊要注意到一個地方
+                我們的ID是_ID 預設是官網預設id 所以不改就會爆掉
+
+            如果還想帶值過去action,可以這樣
+            @Html.ActionLink("詳情","detail","Student",new{id=item.id})
+            代表帶的參數是id,裡面的值請自己看要塞什麼
+            *@
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Edit", "Edit", new{ _ID= item.UserId }) |
                 @Html.ActionLink("Details", "Details", new { _ID=item.UserId }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Delete", "Delete", new { _ID = item.UserId })
             </td>
         </tr>
 }

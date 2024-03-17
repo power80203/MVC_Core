@@ -15,5 +15,8 @@ RUN dotnet publish -c Release -o out
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
+# out folder to app folder
 COPY --from=build-env /app/out .
+# .env to app folder
+COPY --from=build-env /app/.env .
 ENTRYPOINT ["dotnet", "MVC_Core.dll"]
